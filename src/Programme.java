@@ -9,7 +9,7 @@ import java.util.Scanner;
  */
 public class Programme {
     private static Scanner input = new Scanner(System.in);
-    int[] tabr;
+    TABR t;
 
     public static void main(String [ ] args)
     {
@@ -58,10 +58,12 @@ public class Programme {
     }
 
     private static void readFile(BufferedReader br) throws IOException {
+        int nbligne = 0;
         String line = br.readLine();
         while (line != null){
-
+            nbligne++;
         }
+
     }
 
     private static void tabABRversFichier() {
