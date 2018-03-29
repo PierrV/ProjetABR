@@ -9,7 +9,7 @@ import java.util.Scanner;
  */
 public class Programme {
     private static Scanner input = new Scanner(System.in);
-    TABR t;
+    private static TABR t;
 
     public static void main(String [ ] args)
     {
@@ -43,9 +43,13 @@ public class Programme {
 
     private static void fichierVersTABR() {
         BufferedReader br = null;
-        String file = "";
+        String file = "abr.txt";
 
         try {
+            br = new BufferedReader(new FileReader(file));
+            definirNbCases(br);
+            br.close();
+
             br = new BufferedReader(new FileReader(file));
             readFile(br);
             br.close();
@@ -60,10 +64,54 @@ public class Programme {
     private static void readFile(BufferedReader br) throws IOException {
         int nbligne = 0;
         String line = br.readLine();
+        String[] tab;
+        String[] debutFin;
+        String[] valeurs;
         while (line != null){
-            nbligne++;
-        }
+            System.out.println(line);
 
+            tab = line.split(";");
+            debutFin = tab[0].split(":");
+            valeurs = tab[1].split(":");
+
+            ABR abr_racine = new ABR(Integer.valueOf(valeurs[0]), null, null);
+            ABR abr = abr_racine;
+
+            t.getTab()[nbligne] = new Case(Integer.valueOf(debutFin[0]), Integer.valueOf(debutFin[1]), abr );
+
+            for (int i = 1; i < valeurs.length; i++){
+                System.out.println(" i " + valeurs[i]);
+                System.out.println(" valeur " + abr.getValeur());
+                while ( Integer.valueOf(valeurs[i]) < abr.getValeur() || Integer.valueOf(valeurs[i]) > abr.getValeur()   ) {
+                    if (Integer.valueOf(valeurs[i]) < abr.getValeur()) {
+                        if(abr.getSag() == null) {
+                            abr.setSag(new ABR(Integer.valueOf(valeurs[i]), null, null));
+                        } else {
+                            abr = abr.getSag();
+                        }
+                    } else if (Integer.valueOf(valeurs[i]) > abr.getValeur()) {
+                        if(abr.getSad() == null) {
+                            abr.setSad(new ABR(Integer.valueOf(valeurs[i]), null, null));
+                        } else {
+                            abr = abr.getSad();
+                        }
+                        abr = abr.getSad();
+                    }
+                }
+                abr = abr_racine;
+            }
+            nbligne++;
+            line = br.readLine();
+        }
+        t.affiche();
+    }
+
+    private static void definirNbCases(BufferedReader br) throws IOException {
+        int nb = 0;
+        while (br.readLine() != null){
+            nb++;
+        }
+        t = new TABR(nb);
     }
 
     private static void tabABRversFichier() {
