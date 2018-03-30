@@ -18,24 +18,64 @@ public class TABR {
     }
 
     public void affiche() {
-        for (int i = 0; i < tab.length; i++) {
-            System.out.println("Case " + i);
-            System.out.println("Debut " + tab[i].getDebut());
-            System.out.println("Fin " + tab[i].getFin());
-            afficheABR(tab[i].getAbr());
+        for (int i = 0 ; i < tab.length; i++) {
+            System.out.println("Case : " + i);
+            System.out.println("Debut : " + tab[i].getDebut());
+            System.out.println("Fin : " + tab[i].getFin());
+            tab[i].afficheABR(tab[i].getAbr());
+        }
+
+    }
+
+    public void verification(){
+        boolean ordre = true;
+        ABR abr;
+        for (int i = 0; i < tab.length - 1; i++) {
+            if(tab[i].getDebut() < tab[i].getFin()){
+                if (tab[i].getFin() < tab[i + 1].getFin()){
+                    verification_noeud(tab[i].getAbr(), tab[i].getDebut(), tab[i].getFin());
+                } else {
+                    ordre = false;
+                }
+            } else {
+                ordre = false;
+            }
         }
     }
 
-    private void afficheABR(ABR abr) {
-        System.out.println("Noeud courant : "+abr.getValeur());
-        System.out.println("Fils gauche : " + abr.getSag() );
-        if(abr.getSag() != null){
-            afficheABR(abr.getSag());
-        }
-        System.out.println("Fils droit : " +abr.getSad());
-        if(abr.getSad() != null){
-            afficheABR(abr.getSad());
-        }
+    private boolean verification_noeud(ABR abr, int debut, int fin) {
+            boolean b = false;
+            if( ( abr.getValeur() > debut ) && ( abr.getValeur() < fin )){
+                b = true;
+                if (abr.getSag() != null) {
+                    verification_noeud(abr.getSag(), debut, fin);
+                }
+                if (abr.getSad() != null) {
+                    verification_noeud(abr.getSad(), debut, fin);
+                }
+            }
+            return b;
+    }
 
+    public int intervalle(int x){
+        int i = -1;
+        while (i < getTab().length - 1){
+            i++;
+            if ( ( getTab()[i].getDebut() < x ) && ( getTab()[i].getFin() > x) ){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public void affichage(){
+        ABR abr;
+        for (int i = 0; i < tab.length; i++){
+            abr = tab[i].getAbr();
+            System.out.print(tab[i].getDebut()+":"+tab[i].getFin()+";");
+            tab[i].affiche(abr);
+            System.out.println();
+
+        }
     }
 }

@@ -19,12 +19,16 @@ public class Programme {
 
             do {
                 System.out.println("Instance d'entrée : ");
-                System.out.println("1 : ");
+                System.out.println("1 : Fichier vers TABR");
                 System.out.println("2 : TABR vers fichier");
-                System.out.println("3 : ");
+                System.out.println("3 : Affichage sur écran");
+                System.out.println("4 : Verification");
+                System.out.println("5 : Insertion d'un entier");
+                System.out.println("6 : Suppression d'un entier");
+                System.out.println("7 : Afficher le TABR");
                 System.out.println("0 : Exit");
                 choice = input.nextInt();
-            } while (choice < 0 || choice > 3);
+            } while (choice < 0 || choice > 7);
 
             switch (choice) {
                 case 1:
@@ -34,6 +38,40 @@ public class Programme {
                     tabABRversFichier();
                     break;
                 case 3:
+                    t.affichage();
+                   break;
+                case 4:
+                    break;
+                case 5:
+                    if( t != null){
+                        System.out.println("Entrez un nombre ! ");
+                        int entree = input.nextInt();
+                        int intervalle = t.intervalle(entree);
+                        if(intervalle >= 0) {
+                            t.getTab()[intervalle].getAbr().insertion(entree);
+                        } else {
+                            System.out.println("Aucun intervalle ne contient : " + entree );
+                        }
+                    } else {
+                        System.out.println("Attention aucun TABR n'est instancier");
+                    }
+                    break;
+                case 6:
+                    if( t != null){
+                        System.out.println("Entrez un nombre ! ");
+                        int entree = input.nextInt();
+                        int intervalle = t.intervalle(entree);
+                        if ( intervalle >= 0) {
+                            t.getTab()[intervalle].getAbr().supprimer(entree, t.getTab()[intervalle].getAbr());
+                        } else {
+                            System.out.println("Aucun intervalle ne contient : " + entree );
+                        }
+                    } else {
+                        System.out.println("Attention aucun TABR n'est instancier");
+                    }
+                    break;
+                case 7:
+                    t.affiche();
                     break;
                 default:
             }
@@ -80,23 +118,23 @@ public class Programme {
             t.getTab()[nbligne] = new Case(Integer.valueOf(debutFin[0]), Integer.valueOf(debutFin[1]), abr );
 
             for (int i = 1; i < valeurs.length; i++){
-
-                while ( Integer.valueOf(valeurs[i]) < abr.getValeur() || Integer.valueOf(valeurs[i]) > abr.getValeur()   ) {
-
-                    if (Integer.valueOf(valeurs[i]) < abr.getValeur()) {
-                        if(abr.getSag() == null) {
-                            abr.setSag(new ABR(Integer.valueOf(valeurs[i]), null, null));
-                        } else {
-                            abr = abr.getSag();
-                        }
-                    } else if (Integer.valueOf(valeurs[i]) > abr.getValeur()) {
-                        if(abr.getSad() == null) {
-                            abr.setSad(new ABR(Integer.valueOf(valeurs[i]), null, null));
-                        } else {
-                            abr = abr.getSad();
-                        }
-                    }
-                }
+                 abr.insertion(Integer.valueOf(valeurs[i]));
+//                while ( Integer.valueOf(valeurs[i]) < abr.getValeur() || Integer.valueOf(valeurs[i]) > abr.getValeur()   ) {
+//
+//                    if (Integer.valueOf(valeurs[i]) < abr.getValeur()) {
+//                        if(abr.getSag() == null) {
+//                            abr.setSag(new ABR(Integer.valueOf(valeurs[i]), null, null));
+//                        } else {
+//                            abr = abr.getSag();
+//                        }
+//                    } else if (Integer.valueOf(valeurs[i]) > abr.getValeur()) {
+//                        if(abr.getSad() == null) {
+//                            abr.setSad(new ABR(Integer.valueOf(valeurs[i]), null, null));
+//                        } else {
+//                            abr = abr.getSad();
+//                        }
+//                    }
+//                }
                 abr = abr_racine;
             }
             nbligne++;

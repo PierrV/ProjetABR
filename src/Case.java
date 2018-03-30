@@ -53,4 +53,15 @@ public class Case {
             afficheABR(abr.getSad());
         }
     }
+
+    public void affiche(ABR abr){
+        System.out.print(abr.getValeur()+":");
+        if(abr.getSag() != null){
+            affiche(abr.getSag());
+        }
+        if(abr.getSad() != null){
+            affiche(abr.getSad());
+        }
+    }
+
 }
