@@ -35,4 +35,22 @@ public class Case {
     public void setAbr(ABR abr) {
         this.abr = abr;
     }
+
+    public void afficheABR(ABR abr){
+        System.out.print(" Le noeud " + abr.getValeur());
+        if (abr.getSag() != null) {
+            System.out.print(" a pour fils gauche : " + abr.getSag().getValeur());
+        }
+        if (abr.getSad() != null) {
+            System.out.print(" a pour fils droit : " + abr.getSad().getValeur());
+        }
+        System.out.println();
+        int noeud = abr.getValeur();
+        if(abr.getSag() != null){
+            afficheABR(abr.getSag());
+        }
+        if(abr.getSad() != null){
+            afficheABR(abr.getSad());
+        }
+    }
 }

@@ -80,9 +80,9 @@ public class Programme {
             t.getTab()[nbligne] = new Case(Integer.valueOf(debutFin[0]), Integer.valueOf(debutFin[1]), abr );
 
             for (int i = 1; i < valeurs.length; i++){
-                System.out.println(" i " + valeurs[i]);
-                System.out.println(" valeur " + abr.getValeur());
+
                 while ( Integer.valueOf(valeurs[i]) < abr.getValeur() || Integer.valueOf(valeurs[i]) > abr.getValeur()   ) {
+
                     if (Integer.valueOf(valeurs[i]) < abr.getValeur()) {
                         if(abr.getSag() == null) {
                             abr.setSag(new ABR(Integer.valueOf(valeurs[i]), null, null));
@@ -95,7 +95,6 @@ public class Programme {
                         } else {
                             abr = abr.getSad();
                         }
-                        abr = abr.getSad();
                     }
                 }
                 abr = abr_racine;
@@ -104,6 +103,13 @@ public class Programme {
             line = br.readLine();
         }
         t.affiche();
+        afficheLesArbres();
+    }
+
+    private static void afficheLesArbres() {
+        for(int i = 0; i < t.getTab().length; i++) {
+            t.getTab()[i].afficheABR(t.getTab()[i].getAbr());
+        }
     }
 
     private static void definirNbCases(BufferedReader br) throws IOException {
