@@ -16,7 +16,7 @@ public class Programme {
         int choice = 0;
         File file = null;
         do {
-
+            System.out.println("");
             do {
                 System.out.println("Instance d'entrée : ");
                 System.out.println("1 : Fichier vers TABR");
@@ -25,10 +25,11 @@ public class Programme {
                 System.out.println("4 : Verification");
                 System.out.println("5 : Insertion d'un entier");
                 System.out.println("6 : Suppression d'un entier");
-                System.out.println("7 : Afficher le TABR");
+                System.out.println("7 : Fusion de 2 cases !");
+                System.out.println("8 : Fusion de TABR !");
                 System.out.println("0 : Exit");
                 choice = input.nextInt();
-            } while (choice < 0 || choice > 7);
+            } while (choice < 0 || choice > 8);
 
             switch (choice) {
                 case 1:
@@ -71,7 +72,13 @@ public class Programme {
                     }
                     break;
                 case 7:
-                    t.affiche();
+                    System.out.println("Quel case doit fusionner avec la suivante ?");
+                    t.fusion2cases(input.nextInt());
+                    break;
+                case 8:
+                    System.out.println("Fusion de TABR !");
+                    ABR abr = t.fusionTABR();
+                    abr.affiche();
                     break;
                 default:
             }

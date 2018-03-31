@@ -55,11 +55,13 @@ public class Case {
     }
 
     public void affiche(ABR abr){
-        System.out.print(abr.getValeur()+":");
+        System.out.print(abr.getValeur());
         if(abr.getSag() != null){
+            System.out.print(":");
             affiche(abr.getSag());
         }
         if(abr.getSad() != null){
+            System.out.print(":");
             affiche(abr.getSad());
         }
     }

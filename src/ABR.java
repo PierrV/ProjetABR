@@ -82,14 +82,36 @@ public class ABR {
     private void remonter(ABR noeud) {
             if (noeud.getSad() == null) {
                 if(noeud.getSag() != null) {
-                    noeud = noeud.getSag();
+                    noeud.setValeur(noeud.getSag().getValeur());
+              //      noeud.setSag(noeud.getSag().getSag());
+              //      noeud.setSad(noeud.getSag().getSad());
+                    if(noeud.getSag().getSag() != null) {
+                        noeud.setSag(noeud.getSag().getSag());
+                    } else {
+                        noeud.setSag(null);
+                    }
+                    if(noeud.getSag().getSad() != null) {
+                        noeud.setSad(noeud.getSag().getSad());
+                    }
                     System.out.println("on remonte gauche " + noeud.getValeur());
-                    remonter(noeud);
+                } else {
+                    noeud = null;
                 }
             } else {
                 System.out.println("on remonte droite");
                 noeud = noeud.getSad();
-                remonter(noeud);
             }
+    }
+
+    public void affiche(){
+        System.out.print(this.getValeur());
+        if(this.getSag() != null){
+            System.out.print(":");
+            this.getSag().affiche();
+        }
+        if(this.getSad() != null){
+            System.out.print(":");
+            this.getSad().affiche();
+        }
     }
 }
