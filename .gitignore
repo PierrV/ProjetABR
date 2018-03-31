@@ -2,3 +2,7 @@
 out/
 *.iml
 *.md
+*.zip
+*.tar.gz
+t*.txt
+*.class
