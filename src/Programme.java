@@ -39,6 +39,12 @@ public class Programme {
                     t.affichage();
                    break;
                 case 4:
+                    if( t != null) {
+                        if(t.verification())
+                            System.out.println("Le TABR est correcte.");
+                    } else {
+                        System.out.println("Le TABR n'est pas instancier");
+                    }
                     break;
                 case 5:
                     if( t != null){
@@ -75,7 +81,6 @@ public class Programme {
                 case 8:
                     System.out.println("Fusion de TABR !");
                     ABR abr = t.fusionTABR();
-                    abr.affiche();
                     break;
                 default:
             }
@@ -83,6 +88,9 @@ public class Programme {
         System.out.println("Ciao !");
     }
 
+    /*
+     * Génère un TABR a partir d'un fichier donner en entrée (situer dans le meme répertoire que le programme)
+     */
     private static void fichierVersTABR() {
         BufferedReader br = null;
         System.out.print("Entrez le nom du fichier : ");
@@ -104,7 +112,11 @@ public class Programme {
 
 
     }
-
+    /*
+     * Lit le fichier en créant une nouvelle case pour chaque ligne
+     * La ligne est séparer par des ; et :
+     * Pour chaque valeur de noeud on va l'insérer dans l'abr de la case
+     */
     private static void readFile(BufferedReader br) throws IOException {
         int nbligne = 0;
         String line = br.readLine();
@@ -131,7 +143,6 @@ public class Programme {
             line = br.readLine();
         }
         t.affiche();
-        afficheLesArbres();
     }
 
     private static void afficheLesArbres() {
@@ -140,6 +151,9 @@ public class Programme {
         }
     }
 
+    /*
+     * Definit la longueur du TABR
+     */
     private static void definirNbCases(BufferedReader br) throws IOException {
         int nb = 0;
         while (br.readLine() != null){
@@ -148,6 +162,9 @@ public class Programme {
         t = new TABR(nb);
     }
 
+    /*
+     * Écrit un TABR dans un fichier
+     */
     private static void tabABRversFichier() {
         BufferedWriter bw = null;
         System.out.println("Comment appeler le fichier ?");
@@ -164,13 +181,16 @@ public class Programme {
 
     }
 
+    /*
+     * Pour chaque case du tableau écrit une ligne dans le fichier sous la forme debut:fin;noeud1:noeud2
+     */
     private static void writeFile(BufferedWriter bw) throws IOException {
-        System.out.println("Écriture en cours ...");
         if(t != null){
             ABR abr;
             Case[] tab = t.getTab();
             for (int i = 0; i < tab.length; i++){
                 if(tab[i] != null) {
+                    System.out.println("Écriture en cours ...");
                     abr = tab[i].getAbr();
                     bw.write(tab[i].getDebut() + ":" + tab[i].getFin() + ";");
                     tab[i].write(abr, bw);

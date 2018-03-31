@@ -36,6 +36,10 @@ public class ABR {
         this.sad = sad;
     }
 
+    /*
+     * Parcours les noeuds de l'ABR pour inséré la valeur.
+     *
+     */
     public void insertion(int x ){
         ABR noeud = this;
         boolean trouver = false;
@@ -62,56 +66,43 @@ public class ABR {
         }
     }
 
+    /*
+     * Permet de supprimer un noeud x
+     */
     public void supprimer(int x, ABR noeud){
-        if (x < noeud.getValeur()) {
-            if(noeud.getSag() != null) {
+       if (noeud == null){
+            System.out.println("Le noeud " + x + " n'a pas était trouver dans l'arbre correspondant à l'intervalle");
+        } else {
+           System.out.println(noeud.getValeur());
+            if(noeud.getValeur() == x) {
+                if (noeud.getSad() == null) {
+                    if (noeud.getSag() != null) {
+                        ABR fils = noeud.getSag();
+                        noeud.setValeur(fils.getValeur());
+                        noeud.setSad(fils.getSad());
+                        noeud.setSag(fils.getSag());
+                    } else {
+                        if (noeud.getSag() == null) {
+                            System.out.println("nulllll");
+                        }
+                        noeud = null;
+                    }
+                } else {
+                    ABR fils = noeud.getSad();
+                    noeud.setValeur(fils.getValeur());
+                    noeud.setSad(fils.getSad());
+                    while (fils.getSag() != null) {
+                        fils = fils.getSag();
+                    }
+                    noeud.setSag(fils);
+                }
+            }
+            else if (noeud.getValeur() > x){
                 supprimer(x, noeud.getSag());
             }
-        } else if (x > noeud.getValeur()) {
-            if(noeud.getSad() != null) {
+            else if (noeud.getValeur() < x){
                 supprimer(x, noeud.getSad());
             }
-        } else if (x == noeud.getValeur()) {
-            System.out.println("on a trouver ");
-            remonter(noeud);
-        } else {
-            System.out.println("Le noeud " + x + " n'a pas était trouver dans l'arbre correspondant à l'intervalle");
-        }
-    }
-
-    private void remonter(ABR noeud) {
-            if (noeud.getSad() == null) {
-                if(noeud.getSag() != null) {
-                    noeud.setValeur(noeud.getSag().getValeur());
-              //      noeud.setSag(noeud.getSag().getSag());
-              //      noeud.setSad(noeud.getSag().getSad());
-                    if(noeud.getSag().getSag() != null) {
-                        noeud.setSag(noeud.getSag().getSag());
-                    } else {
-                        noeud.setSag(null);
-                    }
-                    if(noeud.getSag().getSad() != null) {
-                        noeud.setSad(noeud.getSag().getSad());
-                    }
-                    System.out.println("on remonte gauche " + noeud.getValeur());
-                } else {
-                    noeud = null;
-                }
-            } else {
-                System.out.println("on remonte droite");
-                noeud = noeud.getSad();
-            }
-    }
-
-    public void affiche(){
-        System.out.print(this.getValeur());
-        if(this.getSag() != null){
-            System.out.print(":");
-            this.getSag().affiche();
-        }
-        if(this.getSad() != null){
-            System.out.print(":");
-            this.getSad().affiche();
         }
     }
 }
