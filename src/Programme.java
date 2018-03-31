@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 /**
@@ -88,7 +85,9 @@ public class Programme {
 
     private static void fichierVersTABR() {
         BufferedReader br = null;
-        String file = "abr.txt";
+        System.out.print("Entrez le nom du fichier : ");
+        String file = input.next();
+        System.out.println();
 
         try {
             br = new BufferedReader(new FileReader(file));
@@ -125,23 +124,7 @@ public class Programme {
             t.getTab()[nbligne] = new Case(Integer.valueOf(debutFin[0]), Integer.valueOf(debutFin[1]), abr );
 
             for (int i = 1; i < valeurs.length; i++){
-                 abr.insertion(Integer.valueOf(valeurs[i]));
-//                while ( Integer.valueOf(valeurs[i]) < abr.getValeur() || Integer.valueOf(valeurs[i]) > abr.getValeur()   ) {
-//
-//                    if (Integer.valueOf(valeurs[i]) < abr.getValeur()) {
-//                        if(abr.getSag() == null) {
-//                            abr.setSag(new ABR(Integer.valueOf(valeurs[i]), null, null));
-//                        } else {
-//                            abr = abr.getSag();
-//                        }
-//                    } else if (Integer.valueOf(valeurs[i]) > abr.getValeur()) {
-//                        if(abr.getSad() == null) {
-//                            abr.setSad(new ABR(Integer.valueOf(valeurs[i]), null, null));
-//                        } else {
-//                            abr = abr.getSad();
-//                        }
-//                    }
-//                }
+                abr.insertion(Integer.valueOf(valeurs[i]));
                 abr = abr_racine;
             }
             nbligne++;
@@ -166,8 +149,36 @@ public class Programme {
     }
 
     private static void tabABRversFichier() {
+        BufferedWriter bw = null;
+        System.out.println("Comment appeler le fichier ?");
+        String file = input.next();
+
+        try {
+            bw = new BufferedWriter(new FileWriter(file));
+            writeFile(bw);
+            bw.close();
+        } catch(IOException e){
+            System.out.println("ERREUR : "+file+" existe déjà.");
+            e.printStackTrace();
+        }
 
     }
 
-
+    private static void writeFile(BufferedWriter bw) throws IOException {
+        System.out.println("Écriture en cours ...");
+        if(t != null){
+            ABR abr;
+            Case[] tab = t.getTab();
+            for (int i = 0; i < tab.length; i++){
+                if(tab[i] != null) {
+                    abr = tab[i].getAbr();
+                    bw.write(tab[i].getDebut() + ":" + tab[i].getFin() + ";");
+                    tab[i].write(abr, bw);
+                    bw.newLine();
+                }
+            }
+        } else {
+            System.out.println("Aucun TABR n'existe");
+        }
+    }
 }

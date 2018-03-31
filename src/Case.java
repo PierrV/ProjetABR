@@ -1,3 +1,6 @@
+import java.io.BufferedWriter;
+import java.io.IOException;
+
 /**
  * Created by valenza-manjaro on 15/03/18.
  */
@@ -66,4 +69,15 @@ public class Case {
         }
     }
 
+    public void write(ABR abr, BufferedWriter bw) throws IOException {
+        bw.write(String.valueOf(abr.getValeur()));
+        if(abr.getSag() != null){
+            bw.write(":");
+            write(abr.getSag(), bw);
+        }
+        if(abr.getSad() != null){
+            bw.write(":");
+            write(abr.getSad(), bw);
+        }
+    }
 }
